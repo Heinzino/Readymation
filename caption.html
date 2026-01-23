@@ -193,12 +193,16 @@
         };
 
         // Create result card HTML
-        function createResultCard(platform, caption) {
+        function createResultCard(platform, captionText) {
             const config = platformConfig[platform] || {
                 icon: 'message-square',
                 color: 'from-brand-500 to-brand-600',
                 label: platform
             };
+
+            // Ensure caption is a string
+            const caption = String(captionText || '');
+            const escapedCaption = caption.replace(/'/g, "\\'").replace(/\n/g, "\\n");
 
             return `
                 <div class="result-card bg-zinc-900/50 border border-zinc-800 rounded-xl p-5 hover:border-zinc-700 transition-colors">
@@ -210,7 +214,7 @@
                             <span class="font-semibold text-white">${config.label}</span>
                         </div>
                         <button
-                            onclick="copyToClipboard(this, '${caption.replace(/'/g, "\\'").replace(/\n/g, "\\n")}')"
+                            onclick="copyToClipboard(this, '${escapedCaption}')"
                             class="p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-colors"
                             title="Copy to clipboard"
                         >
@@ -294,7 +298,17 @@
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
-                const data = await response.json();
+                let data = await response.json();
+                console.log('Response data:', data);
+
+                // Handle if response is wrapped in an array
+                if (Array.isArray(data) && data.length > 0) {
+                    data = data[0];
+                }
+                // Handle if response has an output property (common n8n pattern)
+                if (data.output) {
+                    data = data.output;
+                }
 
                 // Clear previous results
                 resultsContainer.innerHTML = '';
@@ -327,7 +341,11 @@
 
             } catch (error) {
                 console.error('Error:', error);
-                showError('Failed to generate captions. Please check your webhook URL and try again.');
+                if (error.message.includes('Failed to fetch') || error.name === 'TypeError') {
+                    showError('CORS error: The webhook needs to allow requests from this domain. Check browser console for details.');
+                } else {
+                    showError(`Error: ${error.message}`);
+                }
             } finally {
                 setLoading(false);
             }
