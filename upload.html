@@ -68,6 +68,95 @@
             }
         }
 
+        /* Progress step animations */
+        .progress-step {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .progress-step.active {
+            transform: translateX(4px);
+        }
+
+        .progress-step.complete {
+            transform: scale(1.02);
+        }
+
+        @keyframes checkmark {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2) rotate(180deg);
+            }
+            100% {
+                transform: scale(1) rotate(360deg);
+                opacity: 1;
+            }
+        }
+
+        .checkmark-animate {
+            animation: checkmark 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 8px rgba(249, 115, 22, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(249, 115, 22, 0);
+            }
+        }
+
+        .progress-step.active .step-indicator {
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: #27272a;
+            border-radius: 9999px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f97316, #fb923c, #f97316);
+            background-size: 200% 100%;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: shimmer 2s linear infinite;
+        }
+
+        .step-indicator {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid currentColor;
+            transition: all 0.3s ease;
+        }
+
+        .step-number {
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
         .file-upload-area {
             border: 2px dashed #52525b;
             transition: all 0.3s ease;
@@ -205,21 +294,36 @@
                         <i data-lucide="list-checks" class="w-5 h-5 text-brand-500"></i>
                         Upload Progress
                     </h3>
-                    <div class="space-y-3">
-                        <div id="step1" class="flex items-center gap-3 text-zinc-400">
-                            <div class="loading-spinner hidden"></div>
-                            <i data-lucide="circle" class="w-4 h-4"></i>
-                            <span>Generating platform-specific captions...</span>
+
+                    <!-- Progress Bar -->
+                    <div class="progress-bar">
+                        <div id="progressBarFill" class="progress-bar-fill" style="width: 0%"></div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div id="step1" class="progress-step flex items-center gap-4 text-zinc-400 p-3 rounded-lg bg-zinc-800/30">
+                            <div class="step-indicator">
+                                <span class="step-number">1</span>
+                                <div class="loading-spinner hidden"></div>
+                                <i data-lucide="circle" class="w-4 h-4 hidden"></i>
+                            </div>
+                            <span class="flex-1">Generating platform-specific captions...</span>
                         </div>
-                        <div id="step2" class="flex items-center gap-3 text-zinc-400">
-                            <div class="loading-spinner hidden"></div>
-                            <i data-lucide="circle" class="w-4 h-4"></i>
-                            <span>Uploading to platforms...</span>
+                        <div id="step2" class="progress-step flex items-center gap-4 text-zinc-400 p-3 rounded-lg bg-zinc-800/30">
+                            <div class="step-indicator">
+                                <span class="step-number">2</span>
+                                <div class="loading-spinner hidden"></div>
+                                <i data-lucide="circle" class="w-4 h-4 hidden"></i>
+                            </div>
+                            <span class="flex-1">Uploading to platforms...</span>
                         </div>
-                        <div id="step3" class="flex items-center gap-3 text-zinc-400">
-                            <div class="loading-spinner hidden"></div>
-                            <i data-lucide="circle" class="w-4 h-4"></i>
-                            <span>Processing upload...</span>
+                        <div id="step3" class="progress-step flex items-center gap-4 text-zinc-400 p-3 rounded-lg bg-zinc-800/30">
+                            <div class="step-indicator">
+                                <span class="step-number">3</span>
+                                <div class="loading-spinner hidden"></div>
+                                <i data-lucide="circle" class="w-4 h-4 hidden"></i>
+                            </div>
+                            <span class="flex-1">Processing upload...</span>
                         </div>
                     </div>
                 </div>
@@ -335,6 +439,14 @@
             return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
         }
 
+        // Progress bar helper
+        function updateProgressBar(percentage) {
+            const progressBarFill = document.getElementById('progressBarFill');
+            if (progressBarFill) {
+                progressBarFill.style.width = percentage + '%';
+            }
+        }
+
         // Progress step helpers
         function updateStep(stepId, status) {
             const step = document.getElementById(stepId);
@@ -343,6 +455,7 @@
                 return;
             }
 
+            const stepNumber = step.querySelector('.step-number');
             const icon = step.querySelector('i');
             const spinner = step.querySelector('.loading-spinner');
 
@@ -351,22 +464,44 @@
                 return;
             }
 
+            // Remove all state classes
+            step.classList.remove('active', 'complete', 'text-zinc-400', 'text-green-400', 'text-red-400', 'text-brand-400');
+
             if (status === 'loading') {
-                step.classList.remove('text-zinc-400', 'text-green-400');
-                step.classList.add('text-brand-400');
+                step.classList.add('text-brand-400', 'active');
+                if (stepNumber) stepNumber.classList.add('hidden');
                 icon.classList.add('hidden');
                 spinner.classList.remove('hidden');
+
+                // Update progress bar based on step
+                const stepNum = parseInt(stepId.replace('step', ''));
+                updateProgressBar((stepNum - 1) * 33.33);
+
             } else if (status === 'complete') {
-                step.classList.remove('text-zinc-400', 'text-brand-400');
-                step.classList.add('text-green-400');
+                step.classList.remove('active');
+                step.classList.add('text-green-400', 'complete');
                 spinner.classList.add('hidden');
+                if (stepNumber) stepNumber.classList.add('hidden');
                 icon.classList.remove('hidden');
                 icon.setAttribute('data-lucide', 'check-circle');
+                icon.classList.add('checkmark-animate');
                 lucide.createIcons();
+
+                // Update progress bar based on step
+                const stepNum = parseInt(stepId.replace('step', ''));
+                const progressPercentage = stepNum === 3 ? 100 : stepNum * 33.33;
+                updateProgressBar(progressPercentage);
+
+                // Remove animation class after animation completes
+                setTimeout(() => {
+                    icon.classList.remove('checkmark-animate');
+                }, 500);
+
             } else if (status === 'error') {
-                step.classList.remove('text-zinc-400', 'text-brand-400');
+                step.classList.remove('active', 'complete');
                 step.classList.add('text-red-400');
                 spinner.classList.add('hidden');
+                if (stepNumber) stepNumber.classList.add('hidden');
                 icon.classList.remove('hidden');
                 icon.setAttribute('data-lucide', 'x-circle');
                 lucide.createIcons();
