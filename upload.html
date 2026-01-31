@@ -435,16 +435,36 @@
                 // Step 1: Generate captions
                 updateStep('step1', 'loading');
 
+                console.log('Sending caption to webhook:', caption);
+                console.log('Webhook URL:', CAPTION_WEBHOOK_URL);
+
+                // Add timeout to fetch request
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
                 const captionResponse = await fetch(CAPTION_WEBHOOK_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ Caption: caption })
+                    body: JSON.stringify({ Caption: caption }),
+                    signal: controller.signal
+                }).catch(err => {
+                    clearTimeout(timeoutId);
+                    if (err.name === 'AbortError') {
+                        throw new Error('Caption generation timed out after 30 seconds');
+                    }
+                    throw new Error(`Network error: ${err.message}`);
                 });
 
+                clearTimeout(timeoutId);
+
+                console.log('Caption response status:', captionResponse.status);
+
                 if (!captionResponse.ok) {
-                    throw new Error(`Caption generation failed: ${captionResponse.status}`);
+                    const errorText = await captionResponse.text();
+                    console.error('Caption generation error:', errorText);
+                    throw new Error(`Caption generation failed: ${captionResponse.status} - ${errorText}`);
                 }
 
                 let captionData = await captionResponse.json();
@@ -562,11 +582,18 @@
                 uploadStatus.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
             } catch (error) {
-                console.error('Error:', error);
-                updateStep('step1', 'error');
-                updateStep('step2', 'error');
-                updateStep('step3', 'error');
-                showError(`Error: ${error.message}`);
+                console.error('Full error details:', error);
+
+                // Determine which step failed based on error message
+                if (error.message.includes('Caption') || error.message.includes('Network') || error.message.includes('timed out')) {
+                    updateStep('step1', 'error');
+                    showError(`Caption Generation Error: ${error.message}. Check browser console for details.`);
+                } else {
+                    updateStep('step1', 'error');
+                    updateStep('step2', 'error');
+                    updateStep('step3', 'error');
+                    showError(`Upload Error: ${error.message}`);
+                }
             } finally {
                 setLoading(false);
             }
