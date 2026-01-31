@@ -261,11 +261,18 @@
         const UPLOAD_API_URL = 'https://api.upload-post.com/api/upload';
         const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBpY2tzeXBpY2tzQHlhaG9vLmNvbSIsImV4cCI6NDkxNjkyMjExNywianRpIjoiM2E3YzliMzQtMGMxYS00NmVkLWI3OTAtMGU0MDU5M2RlMzQ5In0.xCEnWBF_00Ob3HN7e6tsGBBHaJfg4i-JdPBEZkfJNYY';
 
+        console.log('Script loaded - initializing upload form');
+
         // DOM Elements
         const form = document.getElementById('uploadForm');
         const accountSelect = document.getElementById('account');
         const captionInput = document.getElementById('caption');
         const videoFileInput = document.getElementById('videoFile');
+
+        console.log('Form element:', form);
+        console.log('Account select:', accountSelect);
+        console.log('Caption input:', captionInput);
+        console.log('Video input:', videoFileInput);
         const fileUploadArea = document.getElementById('fileUploadArea');
         const uploadPrompt = document.getElementById('uploadPrompt');
         const fileInfo = document.getElementById('fileInfo');
@@ -415,17 +422,25 @@
         }
 
         // Form submission
+        console.log('Adding submit event listener to form');
+
         form.addEventListener('submit', async (e) => {
+            console.log('Form submitted!');
             e.preventDefault();
 
             const account = accountSelect.value;
             const caption = captionInput.value.trim();
             const videoFile = videoFileInput.files[0];
 
+            console.log('Form values:', { account, caption, videoFile });
+
             if (!account || !caption || !videoFile) {
+                console.log('Validation failed - missing fields');
                 showError('Please fill in all fields and select a video file.');
                 return;
             }
+
+            console.log('Validation passed - starting upload process');
 
             hideError();
             setLoading(true);
