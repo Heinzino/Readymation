@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Upload | Readymation</title>
+    <link rel="icon" type="image/png" href="ReadymationNoBG.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                            950: '#431407',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        .loading-spinner {
+            border: 3px solid rgba(249, 115, 22, 0.2);
+            border-top: 3px solid #f97316;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .status-card {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .file-upload-area {
+            border: 2px dashed #52525b;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-area.dragover {
+            border-color: #f97316;
+            background-color: rgba(249, 115, 22, 0.05);
+        }
+
+        .file-upload-area.has-file {
+            border-color: #22c55e;
+            background-color: rgba(34, 197, 94, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-zinc-950/80 backdrop-blur-xl border-b border-zinc-800/50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="ReadymationNoBG.png" alt="Readymation" class="h-8">
+            </a>
+            <a href="index.html" class="text-zinc-400 hover:text-white transition-colors flex items-center gap-2">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Back to Home
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-16 px-6">
+        <div class="max-w-3xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-sm mb-6">
+                    <i data-lucide="upload-cloud" class="w-4 h-4"></i>
+                    Multi-Platform Upload
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                    Upload to <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-brand-600">All Platforms</span>
+                </h1>
+                <p class="text-zinc-400 text-lg max-w-xl mx-auto">
+                    Upload your video once, post to YouTube, Twitter/X, and Instagram with AI-generated captions.
+                </p>
+            </div>
+
+            <!-- Form -->
+            <form id="uploadForm" class="mb-12">
+                <div class="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 md:p-8 space-y-6">
+
+                    <!-- Account Selection -->
+                    <div>
+                        <label for="account" class="block text-sm font-medium text-zinc-300 mb-3">
+                            Select Account
+                        </label>
+                        <select
+                            id="account"
+                            name="account"
+                            class="w-full bg-zinc-800/50 border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all"
+                            required
+                        >
+                            <option value="">Choose an account...</option>
+                            <option value="griffinSports">griffinSports</option>
+                            <option value="hansPicks">hansPicks</option>
+                            <option value="landonBets">landonBets</option>
+                        </select>
+                    </div>
+
+                    <!-- Caption Input -->
+                    <div>
+                        <label for="caption" class="block text-sm font-medium text-zinc-300 mb-3">
+                            Main Caption
+                        </label>
+                        <textarea
+                            id="caption"
+                            name="caption"
+                            rows="4"
+                            placeholder="Enter your main caption idea... e.g., 'Saturday Night NBA Picks — Miller, Maxey, McDaniels'"
+                            class="w-full bg-zinc-800/50 border border-zinc-700 rounded-xl px-4 py-3 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all resize-none"
+                            required
+                        ></textarea>
+                        <p class="mt-2 text-xs text-zinc-500">This will be used to generate platform-specific captions automatically</p>
+                    </div>
+
+                    <!-- Video Upload -->
+                    <div>
+                        <label class="block text-sm font-medium text-zinc-300 mb-3">
+                            Video File
+                        </label>
+                        <div
+                            id="fileUploadArea"
+                            class="file-upload-area relative rounded-xl p-8 text-center cursor-pointer"
+                        >
+                            <input
+                                type="file"
+                                id="videoFile"
+                                name="videoFile"
+                                accept="video/mp4,video/quicktime,video/*"
+                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                required
+                            />
+                            <div id="uploadPrompt">
+                                <i data-lucide="upload" class="w-12 h-12 mx-auto mb-3 text-zinc-500"></i>
+                                <p class="text-zinc-400 mb-1">
+                                    <span class="text-brand-500 font-semibold">Click to upload</span> or drag and drop
+                                </p>
+                                <p class="text-xs text-zinc-500">MP4, MOV or other video formats</p>
+                            </div>
+                            <div id="fileInfo" class="hidden">
+                                <i data-lucide="file-video" class="w-12 h-12 mx-auto mb-3 text-green-500"></i>
+                                <p class="text-zinc-300 font-medium mb-1" id="fileName"></p>
+                                <p class="text-xs text-zinc-500" id="fileSize"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button
+                        type="submit"
+                        id="submitBtn"
+                        class="w-full bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 group"
+                    >
+                        <span id="btnText">Generate & Upload</span>
+                        <i data-lucide="send" class="w-5 h-5 group-hover:scale-110 transition-transform" id="btnIcon"></i>
+                        <div id="btnSpinner" class="loading-spinner hidden"></div>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Progress Steps -->
+            <div id="progressSteps" class="hidden mb-12">
+                <div class="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 md:p-8">
+                    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                        <i data-lucide="list-checks" class="w-5 h-5 text-brand-500"></i>
+                        Upload Progress
+                    </h3>
+                    <div class="space-y-3">
+                        <div id="step1" class="flex items-center gap-3 text-zinc-400">
+                            <div class="loading-spinner hidden"></div>
+                            <i data-lucide="circle" class="w-4 h-4"></i>
+                            <span>Generating platform-specific captions...</span>
+                        </div>
+                        <div id="step2" class="flex items-center gap-3 text-zinc-400">
+                            <div class="loading-spinner hidden"></div>
+                            <i data-lucide="circle" class="w-4 h-4"></i>
+                            <span>Uploading to platforms...</span>
+                        </div>
+                        <div id="step3" class="flex items-center gap-3 text-zinc-400">
+                            <div class="loading-spinner hidden"></div>
+                            <i data-lucide="circle" class="w-4 h-4"></i>
+                            <span>Processing upload...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Status -->
+            <div id="uploadStatus" class="hidden">
+                <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                    <i data-lucide="check-circle" class="w-6 h-6 text-green-500"></i>
+                    Upload Complete
+                </h2>
+
+                <div id="statusContainer" class="space-y-4">
+                    <!-- Status cards will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorMessage" class="hidden bg-red-500/10 border border-red-500/20 rounded-xl p-4 text-red-400 flex items-center gap-3">
+                <i data-lucide="alert-circle" class="w-5 h-5 flex-shrink-0"></i>
+                <span id="errorText">Something went wrong. Please try again.</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-zinc-800/50 py-8 px-6">
+        <div class="max-w-7xl mx-auto text-center text-zinc-500 text-sm">
+            &copy; 2025 Readymation. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Configuration
+        const CAPTION_WEBHOOK_URL = 'https://socialzap.app.n8n.cloud/webhook/caption-generator';
+        const UPLOAD_API_URL = 'https://api.upload-post.com/api/upload';
+        const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBpY2tzeXBpY2tzQHlhaG9vLmNvbSIsImV4cCI6NDkxNjkyMjExNywianRpIjoiM2E3YzliMzQtMGMxYS00NmVkLWI3OTAtMGU0MDU5M2RlMzQ5In0.xCEnWBF_00Ob3HN7e6tsGBBHaJfg4i-JdPBEZkfJNYY';
+
+        // DOM Elements
+        const form = document.getElementById('uploadForm');
+        const accountSelect = document.getElementById('account');
+        const captionInput = document.getElementById('caption');
+        const videoFileInput = document.getElementById('videoFile');
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const uploadPrompt = document.getElementById('uploadPrompt');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const btnIcon = document.getElementById('btnIcon');
+        const btnSpinner = document.getElementById('btnSpinner');
+        const progressSteps = document.getElementById('progressSteps');
+        const uploadStatus = document.getElementById('uploadStatus');
+        const statusContainer = document.getElementById('statusContainer');
+        const errorMessage = document.getElementById('errorMessage');
+        const errorText = document.getElementById('errorText');
+
+        // File upload handling
+        videoFileInput.addEventListener('change', handleFileSelect);
+
+        fileUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileUploadArea.classList.add('dragover');
+        });
+
+        fileUploadArea.addEventListener('dragleave', () => {
+            fileUploadArea.classList.remove('dragover');
+        });
+
+        fileUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileUploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                videoFileInput.files = files;
+                handleFileSelect();
+            }
+        });
+
+        function handleFileSelect() {
+            const file = videoFileInput.files[0];
+            if (file) {
+                fileName.textContent = file.name;
+                fileSize.textContent = formatFileSize(file.size);
+                uploadPrompt.classList.add('hidden');
+                fileInfo.classList.remove('hidden');
+                fileUploadArea.classList.add('has-file');
+                lucide.createIcons();
+            }
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+        }
+
+        // Progress step helpers
+        function updateStep(stepId, status) {
+            const step = document.getElementById(stepId);
+            const icon = step.querySelector('i[data-lucide]');
+            const spinner = step.querySelector('.loading-spinner');
+
+            if (status === 'loading') {
+                step.classList.remove('text-zinc-400', 'text-green-400');
+                step.classList.add('text-brand-400');
+                icon.classList.add('hidden');
+                spinner.classList.remove('hidden');
+            } else if (status === 'complete') {
+                step.classList.remove('text-zinc-400', 'text-brand-400');
+                step.classList.add('text-green-400');
+                spinner.classList.add('hidden');
+                icon.classList.remove('hidden');
+                icon.setAttribute('data-lucide', 'check-circle');
+                lucide.createIcons();
+            } else if (status === 'error') {
+                step.classList.remove('text-zinc-400', 'text-brand-400');
+                step.classList.add('text-red-400');
+                spinner.classList.add('hidden');
+                icon.classList.remove('hidden');
+                icon.setAttribute('data-lucide', 'x-circle');
+                lucide.createIcons();
+            }
+        }
+
+        // Set loading state
+        function setLoading(isLoading) {
+            if (isLoading) {
+                btnText.textContent = 'Processing...';
+                btnIcon.classList.add('hidden');
+                btnSpinner.classList.remove('hidden');
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+                progressSteps.classList.remove('hidden');
+            } else {
+                btnText.textContent = 'Generate & Upload';
+                btnIcon.classList.remove('hidden');
+                btnSpinner.classList.add('hidden');
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+            }
+        }
+
+        // Show error
+        function showError(message) {
+            errorText.textContent = message;
+            errorMessage.classList.remove('hidden');
+            uploadStatus.classList.add('hidden');
+        }
+
+        // Hide error
+        function hideError() {
+            errorMessage.classList.add('hidden');
+        }
+
+        // Create status card
+        function createStatusCard(platform, status, requestId, message) {
+            const platformConfig = {
+                youtube: { icon: 'youtube', color: 'from-red-500 to-red-600', label: 'YouTube' },
+                x: { icon: 'twitter', color: 'from-blue-400 to-blue-500', label: 'Twitter/X' },
+                instagram: { icon: 'instagram', color: 'from-pink-500 to-purple-600', label: 'Instagram' }
+            };
+
+            const config = platformConfig[platform] || { icon: 'globe', color: 'from-brand-500 to-brand-600', label: platform };
+            const isSuccess = status === 'success' || status === 'processing';
+            const statusColor = isSuccess ? 'text-green-400' : 'text-red-400';
+            const statusIcon = isSuccess ? 'check-circle' : 'x-circle';
+
+            return `
+                <div class="status-card bg-zinc-900/50 border border-zinc-800 rounded-xl p-5">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-gradient-to-br ${config.color} flex items-center justify-center">
+                                <i data-lucide="${config.icon}" class="w-5 h-5 text-white"></i>
+                            </div>
+                            <span class="font-semibold text-white">${config.label}</span>
+                        </div>
+                        <div class="flex items-center gap-2 ${statusColor}">
+                            <i data-lucide="${statusIcon}" class="w-5 h-5"></i>
+                            <span class="text-sm font-medium">${status}</span>
+                        </div>
+                    </div>
+                    ${requestId ? `<p class="text-xs text-zinc-400 mb-1"><span class="text-zinc-500">Request ID:</span> <code class="text-brand-400">${requestId}</code></p>` : ''}
+                    ${message ? `<p class="text-sm text-zinc-300">${message}</p>` : ''}
+                </div>
+            `;
+        }
+
+        // Form submission
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const account = accountSelect.value;
+            const caption = captionInput.value.trim();
+            const videoFile = videoFileInput.files[0];
+
+            if (!account || !caption || !videoFile) {
+                showError('Please fill in all fields and select a video file.');
+                return;
+            }
+
+            hideError();
+            setLoading(true);
+            uploadStatus.classList.add('hidden');
+
+            try {
+                // Step 1: Generate captions
+                updateStep('step1', 'loading');
+
+                const captionResponse = await fetch(CAPTION_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ Caption: caption })
+                });
+
+                if (!captionResponse.ok) {
+                    throw new Error(`Caption generation failed: ${captionResponse.status}`);
+                }
+
+                let captionData = await captionResponse.json();
+                console.log('Caption response:', captionData);
+
+                // Handle response format
+                if (Array.isArray(captionData) && captionData.length > 0) {
+                    captionData = captionData[0];
+                }
+                if (captionData.output) {
+                    captionData = captionData.output;
+                }
+
+                updateStep('step1', 'complete');
+
+                // Step 2: Upload to platforms
+                updateStep('step2', 'loading');
+
+                const formData = new FormData();
+
+                // Basic fields
+                formData.append('user', account);
+                formData.append('title', captionData.YT_Title || caption);
+
+                // Platforms
+                formData.append('platform[]', 'youtube');
+                formData.append('platform[]', 'x');
+                formData.append('platform[]', 'instagram');
+
+                // Video file
+                formData.append('video', videoFile);
+                formData.append('async_upload', 'true');
+
+                // Instagram fields
+                formData.append('media_type', 'REELS');
+                formData.append('share_to_feed', 'true');
+                formData.append('description', captionData.Caption || caption);
+
+                // YouTube fields
+                formData.append('youtube_title', captionData.YT_Title || caption);
+                formData.append('categoryId', '22');
+                formData.append('privacyStatus', 'public');
+                formData.append('embeddable', 'true');
+                formData.append('license', 'youtube');
+                formData.append('publicStatsViewable', 'true');
+                formData.append('selfDeclaredMadeForKids', 'false');
+                formData.append('containsSyntheticMedia', 'false');
+                formData.append('hasPaidProductPlacement', 'false');
+
+                // X/Twitter fields
+                formData.append('x_long_text_as_post', 'false');
+                formData.append('x_title', captionData.TwitterCaption || caption);
+                formData.append('nullcast', 'false');
+                formData.append('for_super_followers_only', 'false');
+                formData.append('share_with_followers', 'false');
+
+                const uploadResponse = await fetch(UPLOAD_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Apikey ${API_KEY}`
+                    },
+                    body: formData
+                });
+
+                if (!uploadResponse.ok) {
+                    const errorData = await uploadResponse.text();
+                    throw new Error(`Upload failed: ${uploadResponse.status} - ${errorData}`);
+                }
+
+                const uploadData = await uploadResponse.json();
+                console.log('Upload response:', uploadData);
+
+                updateStep('step2', 'complete');
+                updateStep('step3', 'complete');
+
+                // Display results
+                statusContainer.innerHTML = '';
+
+                // Parse the response and create status cards
+                // The response format may vary, so we'll handle different structures
+                if (uploadData.request_id) {
+                    // Single request ID for all platforms
+                    statusContainer.innerHTML += createStatusCard(
+                        'all',
+                        'processing',
+                        uploadData.request_id,
+                        'Upload submitted successfully. Processing in background.'
+                    );
+                } else if (uploadData.results) {
+                    // Individual results per platform
+                    const platforms = ['youtube', 'x', 'instagram'];
+                    platforms.forEach(platform => {
+                        if (uploadData.results[platform]) {
+                            const result = uploadData.results[platform];
+                            statusContainer.innerHTML += createStatusCard(
+                                platform,
+                                result.success ? 'success' : 'failed',
+                                result.request_id || result.id,
+                                result.message || ''
+                            );
+                        }
+                    });
+                } else {
+                    // Fallback: show the raw response
+                    statusContainer.innerHTML += createStatusCard(
+                        'upload',
+                        'success',
+                        uploadData.id || 'N/A',
+                        JSON.stringify(uploadData, null, 2)
+                    );
+                }
+
+                lucide.createIcons();
+                uploadStatus.classList.remove('hidden');
+                uploadStatus.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            } catch (error) {
+                console.error('Error:', error);
+                updateStep('step1', 'error');
+                updateStep('step2', 'error');
+                updateStep('step3', 'error');
+                showError(`Error: ${error.message}`);
+            } finally {
+                setLoading(false);
+            }
+        });
+    </script>
+</body>
+</html>
