@@ -343,11 +343,11 @@
                 return;
             }
 
-            const icon = step.querySelector('i[data-lucide]');
+            const icon = step.querySelector('i');
             const spinner = step.querySelector('.loading-spinner');
 
             if (!icon || !spinner) {
-                console.error(`Icon or spinner not found in step: ${stepId}`);
+                console.error(`Icon or spinner not found in step: ${stepId}`, { icon, spinner });
                 return;
             }
 
@@ -470,7 +470,7 @@
 
                 // Add timeout to fetch request
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+                const timeoutId = setTimeout(() => controller.abort(), 300000); // 5 minute timeout
 
                 const captionResponse = await fetch(CAPTION_WEBHOOK_URL, {
                     method: 'POST',
@@ -482,7 +482,7 @@
                 }).catch(err => {
                     clearTimeout(timeoutId);
                     if (err.name === 'AbortError') {
-                        throw new Error('Caption generation timed out after 30 seconds');
+                        throw new Error('Caption generation timed out after 5 minutes');
                     }
                     throw new Error(`Network error: ${err.message}`);
                 });
