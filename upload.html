@@ -288,6 +288,11 @@
         const errorMessage = document.getElementById('errorMessage');
         const errorText = document.getElementById('errorText');
 
+        console.log('Progress steps element:', progressSteps);
+        console.log('Step1 element:', document.getElementById('step1'));
+        console.log('Step2 element:', document.getElementById('step2'));
+        console.log('Step3 element:', document.getElementById('step3'));
+
         // File upload handling
         videoFileInput.addEventListener('change', handleFileSelect);
 
@@ -333,8 +338,18 @@
         // Progress step helpers
         function updateStep(stepId, status) {
             const step = document.getElementById(stepId);
+            if (!step) {
+                console.error(`Step element not found: ${stepId}`);
+                return;
+            }
+
             const icon = step.querySelector('i[data-lucide]');
             const spinner = step.querySelector('.loading-spinner');
+
+            if (!icon || !spinner) {
+                console.error(`Icon or spinner not found in step: ${stepId}`);
+                return;
+            }
 
             if (status === 'loading') {
                 step.classList.remove('text-zinc-400', 'text-green-400');
