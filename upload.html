@@ -699,8 +699,26 @@
                     throw new Error(`Upload failed: ${uploadResponse.status} - ${errorData}`);
                 }
 
-                const uploadData = await uploadResponse.json();
-                console.log('Upload response:', uploadData);
+                // Get response text first to check if it's valid
+                const responseText = await uploadResponse.text();
+                console.log('Upload response text:', responseText);
+
+                let uploadData;
+                try {
+                    // Only parse if we have content
+                    if (!responseText || responseText.trim() === '') {
+                        console.warn('Empty response from upload API');
+                        uploadData = { success: true, message: 'Upload submitted (no response data)' };
+                    } else {
+                        uploadData = JSON.parse(responseText);
+                    }
+                } catch (jsonError) {
+                    console.error('JSON parsing error:', jsonError);
+                    console.error('Raw response:', responseText);
+                    throw new Error(`Failed to parse upload response: ${jsonError.message}. Raw response: ${responseText.substring(0, 200)}`);
+                }
+
+                console.log('Parsed upload data:', uploadData);
 
                 updateStep('step2', 'complete');
                 updateStep('step3', 'complete');
