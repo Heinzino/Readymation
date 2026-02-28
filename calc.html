@@ -1,0 +1,185 @@
+<html lang="en" class="scroll-smooth"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Calculator - Readymation</title>
+    <link rel="icon" type="image/png" href="ReadymationNoBG.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                            950: '#431407',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body class="bg-neutral-950 text-neutral-200 font-sans antialiased selection:bg-brand-500/30 selection:text-brand-100 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-neutral-950/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-center">
+            <div class="flex items-center gap-12">
+                <a href="index.html" class="flex items-center gap-3">
+                    <img src="ReadymationNoBG.png" alt="Readymation Logo" class="h-10 w-auto">
+                    <span class="text-white font-medium text-xl">Readymation</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Calculator -->
+    <main class="flex-1 flex items-center justify-center pt-32 pb-20 px-6 relative">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[400px] bg-brand-500/8 blur-[120px] rounded-full pointer-events-none -z-10"></div>
+
+        <div class="w-full max-w-md">
+            <div class="text-center mb-10">
+                <h1 class="text-3xl md:text-4xl font-medium text-white tracking-tight mb-3">Lead Calculator</h1>
+                <p class="text-neutral-400">How many emails to scrape this week.</p>
+            </div>
+
+            <div class="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-8 space-y-6">
+
+                <!-- Mailboxes -->
+                <div>
+                    <label class="block text-sm font-medium text-neutral-400 mb-2">Number of Mailboxes</label>
+                    <input id="mailboxes" type="number" min="1" placeholder="e.g. 5"
+                        class="w-full bg-neutral-950 border border-neutral-700 rounded-xl px-4 py-3 text-white text-lg focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500/50 transition-colors placeholder:text-neutral-600">
+                </div>
+
+                <!-- Emails per inbox -->
+                <div>
+                    <label class="block text-sm font-medium text-neutral-400 mb-2">Emails Sent Per Inbox / Day</label>
+                    <input id="emailsPerInbox" type="number" min="1" value="20"
+                        class="w-full bg-neutral-950 border border-neutral-700 rounded-xl px-4 py-3 text-white text-lg focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500/50 transition-colors">
+                </div>
+
+                <!-- Sequence Length -->
+                <div>
+                    <label class="block text-sm font-medium text-neutral-400 mb-2">Sequence Length</label>
+                    <div class="flex gap-3">
+                        <button data-seq="1" class="seq-btn flex-1 py-3 rounded-xl border text-lg font-medium transition-all duration-200 border-neutral-700 bg-neutral-950 text-neutral-400 hover:border-neutral-600">1</button>
+                        <button data-seq="2" class="seq-btn flex-1 py-3 rounded-xl border text-lg font-medium transition-all duration-200 border-brand-500 bg-brand-500/10 text-brand-400">2</button>
+                        <button data-seq="3" class="seq-btn flex-1 py-3 rounded-xl border text-lg font-medium transition-all duration-200 border-neutral-700 bg-neutral-950 text-neutral-400 hover:border-neutral-600">3</button>
+                    </div>
+                </div>
+
+                <!-- Validation % -->
+                <div>
+                    <label class="block text-sm font-medium text-neutral-400 mb-2">Validation Rate <span id="validationDisplay" class="text-brand-400">40%</span></label>
+                    <input id="validation" type="range" min="10" max="100" value="40" step="5"
+                        class="w-full h-2 bg-neutral-800 rounded-full appearance-none cursor-pointer accent-brand-500 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-brand-500 [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(249,115,22,0.5)] [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-brand-500 [&::-moz-range-thumb]:border-0">
+                </div>
+
+                <!-- Divider -->
+                <div class="h-px bg-neutral-800"></div>
+
+                <!-- Results -->
+                <div id="results" class="space-y-4 hidden">
+                    <div class="flex justify-between items-center">
+                        <span class="text-neutral-400">Leads needed</span>
+                        <span id="leadsNeeded" class="text-xl font-medium text-white">—</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-neutral-400">Emails to scrape</span>
+                        <span id="emailsToScrape" class="text-2xl font-medium text-brand-400">—</span>
+                    </div>
+                </div>
+
+                <!-- Empty state -->
+                <p id="emptyState" class="text-center text-neutral-600 text-sm py-2">Enter your number of mailboxes to see results.</p>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-8 text-center text-neutral-600 text-sm">
+        &copy; 2024 Readymation Inc.
+    </footer>
+
+    <script>
+        const mailboxesInput = document.getElementById('mailboxes');
+        const emailsPerInboxInput = document.getElementById('emailsPerInbox');
+        const validationInput = document.getElementById('validation');
+        const validationDisplay = document.getElementById('validationDisplay');
+        const leadsNeededEl = document.getElementById('leadsNeeded');
+        const emailsToScrapeEl = document.getElementById('emailsToScrape');
+        const resultsEl = document.getElementById('results');
+        const emptyStateEl = document.getElementById('emptyState');
+
+        let sequenceLength = 2;
+
+        // Sequence buttons
+        document.querySelectorAll('.seq-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                sequenceLength = parseInt(btn.dataset.seq);
+                document.querySelectorAll('.seq-btn').forEach(b => {
+                    b.className = 'seq-btn flex-1 py-3 rounded-xl border text-lg font-medium transition-all duration-200 border-neutral-700 bg-neutral-950 text-neutral-400 hover:border-neutral-600';
+                });
+                btn.className = 'seq-btn flex-1 py-3 rounded-xl border text-lg font-medium transition-all duration-200 border-brand-500 bg-brand-500/10 text-brand-400';
+                calculate();
+            });
+        });
+
+        // Validation slider
+        validationInput.addEventListener('input', () => {
+            validationDisplay.textContent = validationInput.value + '%';
+            calculate();
+        });
+
+        // Inputs
+        mailboxesInput.addEventListener('input', calculate);
+        emailsPerInboxInput.addEventListener('input', calculate);
+
+        function calculate() {
+            const mailboxes = parseFloat(mailboxesInput.value);
+            const emailsPerInbox = parseFloat(emailsPerInboxInput.value);
+            const validationPct = parseFloat(validationInput.value) / 100;
+
+            if (!mailboxes || mailboxes <= 0 || !emailsPerInbox || emailsPerInbox <= 0) {
+                resultsEl.classList.add('hidden');
+                emptyStateEl.classList.remove('hidden');
+                return;
+            }
+
+            const leadsNeeded = Math.ceil((mailboxes * emailsPerInbox) / sequenceLength);
+            const emailsToScrape = Math.ceil(leadsNeeded / validationPct);
+
+            leadsNeededEl.textContent = leadsNeeded.toLocaleString();
+            emailsToScrapeEl.textContent = emailsToScrape.toLocaleString();
+
+            resultsEl.classList.remove('hidden');
+            emptyStateEl.classList.add('hidden');
+        }
+    </script>
+
+</body></html>
