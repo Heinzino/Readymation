@@ -85,10 +85,11 @@
                     <div id="tagPills" class="flex flex-wrap gap-2 mt-3"></div>
                 </div>
 
-                <!-- Mailbox count (auto-filled, read-only display) -->
-                <div class="flex items-center justify-between bg-neutral-950/50 border border-neutral-800 rounded-xl px-4 py-3">
-                    <span class="text-sm text-neutral-500">Mailboxes selected</span>
-                    <span id="mailboxCount" class="text-lg font-medium text-white">0</span>
+                <!-- Mailbox count (auto-filled from tags, editable for custom estimates) -->
+                <div>
+                    <label class="block text-sm font-medium text-neutral-400 mb-2">Number of Mailboxes</label>
+                    <input id="mailboxCount" type="number" min="0" value="0"
+                        class="w-full bg-neutral-950 border border-neutral-700 rounded-xl px-4 py-3 text-white text-lg focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500/50 transition-colors">
                 </div>
 
                 <!-- Emails per inbox -->
@@ -245,7 +246,7 @@
 
         function updateMailboxCount() {
             const count = tags.filter(t => selectedTagIds.has(t.tag_id)).reduce((sum, t) => sum + t.count, 0);
-            mailboxCountEl.textContent = count;
+            mailboxCountEl.value = count;
         }
 
         // Toggle dropdown
@@ -294,9 +295,10 @@
         });
 
         emailsPerInboxInput.addEventListener('input', calculate);
+        mailboxCountEl.addEventListener('input', calculate);
 
         function calculate() {
-            const mailboxes = parseInt(mailboxCountEl.textContent);
+            const mailboxes = parseInt(mailboxCountEl.value);
             const emailsPerInbox = parseFloat(emailsPerInboxInput.value);
             const validationPct = parseFloat(validationInput.value) / 100;
 
