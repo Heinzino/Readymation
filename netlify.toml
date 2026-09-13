@@ -5,3 +5,13 @@
   from = "/api/tags"
   to = "/.netlify/functions/tags"
   status = 200
+
+[[redirects]]
+  from = "/book"
+  to = "/#book"
+  status = 301
+
+[[redirects]]
+  from = "/book.html"
+  to = "/#book"
+  status = 301
