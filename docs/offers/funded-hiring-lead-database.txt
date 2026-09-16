@@ -1,0 +1,125 @@
+FUNDED & HIRING — LEAD DATABASE FOR IT RECRUITING AGENCIES
+============================================================
+
+
+THE OFFER
+---------
+
+Every Monday, every US software company that raised a funding round in the last 30 days AND is hiring engineers — with the hiring manager's verified email and direct dial. You reach them before the other 40 agencies do.
+
+Each record includes:
+  • Company, website, HQ, headcount
+  • Round: type, amount, date, lead investor
+  • Open engineering roles: count, titles, links, posted date
+  • Hiring manager: name, title, LinkedIn
+  • Verified email + direct dial
+  • Tech stack from the job posts
+
+Guarantee: 95%+ email deliverability. Any bounce replaced free.
+
+
+PRICING
+-------
+
+  FREE        3 sample leads (in the email)
+  $497        Starter list — last 30 days of raises, ~150–250 companies, one-time
+  $397/mo     Weekly feed — every new raise-and-hiring company, delivered Mondays (Sheet, CSV, or pushed into your Smartlead/CRM)
+  $597/mo     Weekly feed filtered to your niche (AI/ML, fintech, DevOps, Series A–B only, headcount, location)
+  $1,500+/mo  Feed + done-for-you sending — we send 1,000 personalized emails/month from it and hand you the interested replies
+
+Cancel anytime. First week free on the feed if you buy the starter list.
+
+
+EMAIL 1 — THE LEAD DROP
+-----------------------
+
+Subject: 3 funded companies hiring engineers this week
+Alt A:   {{company_1}} just raised — hiring 4 engineers
+Alt B:   hiring managers at 3 fresh raises (contacts inside)
+
+Hi {{first_name}},
+
+Saw {{agency}} places {{backend and platform engineers}}. Here are three software companies that raised in the last two weeks and already have engineering roles open — with the person who owns the hiring:
+
+1) {{Company 1}} — Series A, $12M, raised {{date}} — 4 open eng roles
+   {{Name}}, VP Engineering
+   linkedin.com/in/{{handle}} · {{email}} · +1 415 555 0142
+
+2) {{Company 2}} — Seed, $4.5M, raised {{date}} — 2 open eng roles
+   {{Name}}, CTO
+   linkedin.com/in/{{handle}} · {{email}}
+
+3) {{Company 3}} — Series B, $30M, raised {{date}} — 7 open eng roles
+   {{Name}}, Head of Talent
+   linkedin.com/in/{{handle}} · {{email}}
+
+There were 47 companies like this in the US last week. I put every one of them — round, open roles, hiring manager, verified email and direct dial — into a sheet every Monday for recruiting firms that want to be first in.
+
+Want the full list from last week? Reply "list" and I'll send it over.
+
+Heinz
+Readymation
+
+
+EMAIL 2 — DAY 3 (SAME THREAD)
+-----------------------------
+
+{{first_name}} — one more from this morning:
+
+{{Company 4}} — Series A, $9M — 3 open roles (Senior Backend, Platform, SRE)
+{{Name}}, Head of Engineering · linkedin.com/in/{{handle}} · {{email}}
+
+Last week's full sheet has 47 of these. Happy to send it — just reply "list".
+
+
+EMAIL 3 — DAY 7 (BREAKUP)
+-------------------------
+
+Quick math, {{first_name}}:
+
+One placement from a funded company ≈ $25,000 fee. The weekly feed is $397/mo. If it lands you one job order a quarter, it's paid for 20x.
+
+If the timing's off, no worries — should I close this out?
+
+
+LINKEDIN TOUCH — SAME DAY AS EMAIL 1 (OPTIONAL)
+-----------------------------------------------
+
+Connection request, no note.
+After accept: "Sent you three funded companies hiring engineers by email — check your inbox."
+
+
+REPLY SCRIPTS
+-------------
+
+They reply "list" / "yes" / "send it":
+
+  Here's last week — 47 companies. Full emails and dials are open on 8 of them so you can test. If you want the whole thing unlocked, plus every new raise going forward each Monday, it's $397/mo, cancel anytime. Want me to send the link?
+
+  (Send the Google Sheet view-only, watermarked, emails masked to j***@company.com except the 3 from the email + 5 more.)
+
+"How much?"
+
+  $397/mo for the weekly feed, or $497 one-time for the last 30 days. One placement fee pays for five years of it.
+
+"We already use Apollo / ZoomInfo."
+
+  Apollo tells you who exists. This tells you who raised money last week and posted engineering roles this week, with the person to call. It's a timing feed, not a database — most clients run it alongside Apollo.
+
+"Can you just send the emails for us?"
+
+  Yes — that's the done-for-you tier. We send about 1,000 personalized emails a month from the feed and hand you the interested replies. $1,500/mo or pay-per-show.
+
+"Is this data compliant?"
+
+  US B2B business contact data, CAN-SPAM compliant. Every record is sourced from public filings and press, then verified. Opt-outs honored on request.
+
+
+SENDING RULES
+-------------
+
+  • The three leads must be real, raised within 14 days, and match the agency's niche. Recruiters will Google them.
+  • Plain text. No hyperlinks — write linkedin.com/in/handle without https://
+  • Direct dial on one of the three only; "dials on the full list" for the rest.
+  • Personalize line 1 from the agency's website.
+  • Send from the recruiting-pool domains, 30–40 per mailbox per day.
