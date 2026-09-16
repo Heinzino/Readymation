@@ -44,54 +44,73 @@ Formula used: [Primary Keyword + Expertise] | [Secondary Keyword] | [Tool/Outcom
 
 ---
 
-## 3. Overview (paste as-is; ~3,900 chars, under Upwork's 5,000 limit)
+## 3. Overview (Greg H. format — title + rate on top are separate fields; body ~4800 chars, under Upwork's 5,000 limit)
 
 ```
-A payment-processing client's very first lead from my cold email outreach got approved and processed $40,000 on its first night — now tracking toward ~$1.2M/month. Another client had 2 qualified calls booked within hours of launch.
+Cold Email Expert | B2B Lead Generation & Appointment Setting | Smartlead
+$50.00/hr
 
-That is what cold email looks like when list, copy, deliverability, and reply handling are built by one operator who gets paid on results.
+A payment-processing company had zero outbound when they came to me. Their very first lead from my cold email outreach got approved and processed $40,000 on night one — and is now tracking toward ~$1.2M/month in processing volume.
 
-𝗠𝘆 𝗿𝗲𝘀𝘂𝗹𝘁𝘀 (300,000+ cold emails, 1,000,000+ dials):
-📈 7.14x average client return on investment
-📈 2.1 hours average time to first positive reply after launch
-📈 1 booked call per 414 emails · 1 closed client per 1,855 emails
-📈 16 active outbound clients — recruiting & staffing, payments, M&A, agencies, B2B services
-📈 Founder of Readymation Inc. (readymation.com), a pay-per-show appointment-setting agency: I only get paid when the prospect shows up
+𝗠𝘆 𝗿𝗲𝘀𝘂𝗹𝘁𝘀:
 
-𝗪𝗵𝗮𝘁 𝗜 𝗪𝗢𝗡'𝗧 𝗱𝗼:
-❌ Send from your main domain — every campaign runs on separate sending domains and warmed mailboxes.
-❌ Blast a purchased list — every list is built to your ICP and verified before a single email goes out.
-❌ Hand you "leads" that ghost — replies are worked by a real person, qualified, and booked to your calendar with notes.
-❌ Disappear after setup — shared Slack/WhatsApp channel; you see every send, reply, and booking.
+📈 7.14x average ROI for my clients from cold email outreach
+📈 300,000+ cold emails and 1,000,000+ dials placed
+📈 2.1 hours average time from launch to first positive reply
+📈 16 active outbound clients (recruiting & staffing, payments, M&A, agencies, B2B services)
+📈 Founder of Readymation Inc. — a pay-per-show appointment-setting agency where I only get paid when the prospect shows up
 
-𝗪𝗵𝗮𝘁 𝗜 𝗪𝗜𝗟𝗟 𝗱𝗼:
-✅ Cold Email Infrastructure & Deliverability — Secondary domains, SPF/DKIM/DMARC, Google Workspace or Microsoft 365 mailboxes, warm-up, and sending limits so your cold outreach lands in the inbox. You own everything.
-✅ B2B Lead Generation & List Building — Verified decision-maker lists built to your ICP, including trigger lists (companies that just posted a job, raised funding, or opened a location) so you reach people with a live reason to reply.
-✅ Cold Email Copywriting & Sequences — Multi-step, AI-personalized sequences with A/B tests, optimized weekly on positive-reply rate, not opens.
-✅ Smartlead / Instantly Campaign Setup & Management — Campaign builds, inbox rotation, bounce control, and reporting in Smartlead, Instantly, ReachInbox, or your existing tool.
-✅ Reply Handling & Appointment Setting — Every interested reply answered, qualified by phone, and booked to your calendar with a recording and notes.
-✅ Cold Email Audit & Strategy — Already sending? I audit deliverability, list quality, copy, and settings and hand you a prioritized fix list.
+𝗪𝗵𝗮𝘁 𝗜 𝗪𝗢𝗡'𝗧 𝗱𝗼 𝗳𝗼𝗿 𝘆𝗼𝘂:
 
-𝗪𝗵𝗼 𝘁𝗵𝗶𝘀 𝗶𝘀 𝗳𝗼𝗿:
-Recruiting & staffing firms, payment processors, agencies, M&A advisors, and B2B service companies with a clear ideal customer and a deal size that justifies booked calls. If it isn't a fit, I'll say so on the first message.
+❌ Send From Your Main Domain - Your company domain is the one thing you can't buy back. Every campaign I run lives on separate sending domains and warmed mailboxes, so your primary domain never touches a cold email. Ever.
 
-𝗛𝗼𝘄 𝘁𝗼 𝘄𝗼𝗿𝗸 𝘄𝗶𝘁𝗵 𝗺𝗲:
-Message me or invite me to your job with (1) who you sell to and (2) what a good appointment looks like. I'll reply with a short plan, the cost, and how fast we can be live. Or start with the Cold Email Audit in my Project Catalog.
+❌ Blast a Purchased List - Most "lead gen" freelancers buy a list and spray. I build every list to your ICP and verify it before a single email goes out. My secret? I actually read the replies. Bounces cost you deliverability; I'm not spending your reputation.
 
-𝗙𝗔𝗤
-Q: Full campaigns only, or can you fix my existing one?
-A: Both. Most clients hire me for the full build (infrastructure → list → copy → sending → replies). Already sending? Start with an audit.
+❌ Slow Response Times - You'll have me on Slack or WhatsApp. If I don't respond within an hour during business hours, I'm either on a qualification call for you or unconscious (the second one hasn't happened yet).
 
-Q: How fast will I see replies?
-A: Infrastructure and warm-up take about 2 weeks. Once sending starts, my average time to first positive reply is 2.1 hours.
+𝗪𝗵𝗮𝘁 𝗜 𝗪𝗜𝗟𝗟 𝗱𝗼 𝗳𝗼𝗿 𝘆𝗼𝘂:
 
-Q: Will this hurt my domain reputation?
-A: No. All cold outreach runs on separate domains and mailboxes I set up and warm. Your primary domain is never used.
+✅ Cold Email Audits - Already sending and getting crickets? I'll audit your deliverability, list quality, copy, and campaign settings and hand you a prioritized fix blueprint. Start with the Cold Email Audit in my Project Catalog.
 
-Q: Which tools?
-A: Smartlead, Instantly, ReachInbox, Plusvibe; Google Workspace & Microsoft 365; Cloudflare DNS; Apollo, Clay, GetLeads, Apify for lists; Make/n8n; HubSpot, Close, GoHighLevel.
+✅ Cold Email Infrastructure Setup - Secondary domains, SPF/DKIM/DMARC, Google Workspace or Microsoft 365 mailboxes, warm-up, and sending limits — configured within 48 hours and owned by you, not me.
 
-Ready to turn cold email into a predictable source of booked calls? Send me a message and tell me who you want to talk to.
+✅ Email Deliverability - Open or reply rates dropping? I'll diagnose the domain, mailbox, and content issues and get your cold outreach back in the primary inbox fast.
+
+✅ B2B Lead Generation & List Building - Verified decision-maker lists built to your exact ICP with Apollo, Clay, GetLeads, and Apify — including trigger lists (companies that just posted a job, raised funding, or opened a location) so you reach people with a live reason to reply.
+
+✅ Cold Email Copywriting & Sequences - Multi-step, AI-personalized cold email sequences with A/B tests on angle and subject line, optimized weekly on positive-reply rate, not opens.
+
+✅ Smartlead & Instantly Campaign Setup - Campaign builds, inbox rotation, bounce control, and reporting inside Smartlead, Instantly, ReachInbox, or Plusvibe. Sample campaign: 45,223 sent, 432 replies, 51 positive.
+
+✅ Cold Email Campaign Management - Fresh lists every week, copy refreshes, deliverability monitoring, and a dashboard where you see every send, reply, and booking.
+
+✅ Reply Handling & Appointment Setting - Every interested reply gets answered, qualified by phone, and booked straight onto your calendar with a recording and notes. One client had 2 qualified calls booked within hours of launch.
+
+✅ Cold Outreach for Recruiting & Staffing Firms - Daily job-signal pipelines: companies posting relevant roles are identified, hiring-manager emails verified, and cold email sent the same day. Clients have signed job orders and won a Director of Engineering search from this alone.
+
+✅ LinkedIn + Cold Email Outreach - LinkedIn touchpoints layered on your cold email sequence to multiply replies from the same list.
+
+✅ Cold Email Strategy & Consulting - 30 minutes with me and you'll know exactly what your ICP, offer, infrastructure, and sequence should look like before you spend a dollar on tools.
+
+𝗛𝗼𝘄 𝘆𝗼𝘂 𝗰𝗮𝗻 𝘄𝗼𝗿𝗸 𝘄𝗶𝘁𝗵 𝗺𝗲:
+
+Click "Hire Me" now or invite me to your job. I run a small number of cold email builds at a time so every client gets my attention — I will never take on a campaign if I'm fully booked.
+
+Talk soon,
+
+Heinz V.
+
+__
+
+𝗙𝗥𝗘𝗤𝗨𝗘𝗡𝗧𝗟𝗬 𝗔𝗦𝗞𝗘𝗗 𝗤𝗨𝗘𝗦𝗧𝗜𝗢𝗡𝗦:
+
+1. Do you only do one-off projects? I'm open to both one-off builds (audit, infrastructure, campaign setup) and monthly cold email management with appointment setting.
+
+2. How fast will I see replies? Infrastructure and warm-up take about 2 weeks. Once sending starts, my average time to first positive reply is 2.1 hours.
+
+3. Will this hurt my domain reputation? No. All cold outreach runs on separate domains and mailboxes I set up and warm. Your primary domain is never used.
+
+4. Do you build the list, write the emails, AND handle the replies? Is there anything we have to do? I handle everything: infrastructure, lists, copy, sending, A/B testing, reply handling, and booking. You give me your ICP and your calendar, then show up and close.
 ```
 
 ---
